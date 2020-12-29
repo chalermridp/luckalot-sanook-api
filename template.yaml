@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: luckalot-sanook-api stack
+
+Parameters:
+  AppName:
+    Type: String
+    Default: luckalot-sanook-api
+  StageName:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, ppe, prod]
+    ConstraintDescription: must specify dev, ppe or prod
+
+Resources:
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Join ['-', [!Ref AppName, gateway, !Ref StageName]]
+      StageName: !Ref StageName
+      EndpointConfiguration: REGIONAL
+  ProxyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Join ['-', [!Ref AppName, proxy-function, !Ref StageName]]
+      Handler: dist/lambda-entry-point.handler
+      Runtime: nodejs12.x
+      CodeUri: artifact/luckalot-sanook-api.zip
+      MemorySize: 1024
+      Policies: AWSLambdaBasicExecutionRole
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+            RestApiId: !Ref ApiGateway
+
+Outputs:
+  ApiGatewayId:
+    Description: Api Gateway Id
+    Value: !Ref ApiGateway
+  HelloWorldFunctionArn:
+    Description: Proxy Function Arn
+    Value: !GetAtt ProxyFunction.Arn
