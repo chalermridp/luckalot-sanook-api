@@ -25,9 +25,10 @@ export class ResultsService {
   }
 
   private toSanookDateFormat(date: string): string {
-    const year = date.substring(0, 4);
-    const month = date.substring(4, 6);
-    const day = date.substring(6, 8);
+    const splits = date.split('-');
+    const year = splits[0];
+    const month = splits[1];
+    const day = splits[2];
     return day.concat(month, (parseInt(year) + 543).toString());
   }
 }
