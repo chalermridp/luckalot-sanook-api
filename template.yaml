@@ -16,13 +16,13 @@ Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      Name: !Join ['-', [!Ref AppName, gateway, !Ref StageName]]
-      StageName: !Ref StageName
+      Name: !Join ['-', [!Ref AppName, gateway]]
+      StageName: api
       EndpointConfiguration: REGIONAL
   ProxyFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Join ['-', [!Ref AppName, proxy-function, !Ref StageName]]
+      FunctionName: !Join ['-', [!Ref AppName, proxy-function]]
       Handler: dist/lambda-entry-point.handler
       Runtime: nodejs12.x
       CodeUri: artifact/luckalot-sanook-api.zip
@@ -40,6 +40,6 @@ Outputs:
   ApiGatewayId:
     Description: Api Gateway Id
     Value: !Ref ApiGateway
-  HelloWorldFunctionArn:
+  ProxyFunctionArn:
     Description: Proxy Function Arn
     Value: !GetAtt ProxyFunction.Arn
