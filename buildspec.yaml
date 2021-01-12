@@ -19,10 +19,10 @@ phases:
       - npm run build
       - npm prune --production
       - zip -r artifact/luckalot-sanook-api.zip dist/ node_modules
-      - aws cloudformation package --template-file template.yaml --s3-bucket luckalot-sanook-api.${STAGE}-artifact --output-template-file artifact/template.${STAGE}.out.yaml
+      - aws cloudformation package --template-file template.yaml --s3-bucket luckalot-sanook-api-artifact --output-template-file artifact/template.${STAGE}.out.yaml
   post_build:
     commands:
-      - aws cloudformation deploy --template-file artifact/template.${STAGE}.out.yaml --stack-name luckalot-sanook-api-${STAGE}-stack --capabilities CAPABILITY_NAMED_IAM
+      - aws cloudformation deploy --template-file artifact/template.${STAGE}.out.yaml --stack-name luckalot-sanook-api-stack --capabilities CAPABILITY_NAMED_IAM
 artifacts:
  files:
   - artifact/template.${STAGE}.out.yaml
