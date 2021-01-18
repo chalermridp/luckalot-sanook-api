@@ -17,7 +17,7 @@ export class ResultsService {
     $('.lotto__number').each((index, value) => {
       const result: Result = {
         value: $(value).text(),
-        resultTypeCode: this.resultTypeService.getResultTypeCodeByIndex(index),
+        result_type_code: this.resultTypeService.getResultTypeCodeByIndex(index),
       };
       results.push(result);
     });

@@ -1,4 +1,4 @@
 export class Result {
   value: string;
-  resultTypeCode: string;
+  result_type_code: string;
 }
