@@ -40,6 +40,15 @@ Outputs:
   ApiGatewayId:
     Description: Api Gateway Id
     Value: !Ref ApiGateway
+    Export:
+      Name: !Sub "${AWS::StackName}-ApiGatewayId"
+  ApiGatewayUrl:
+    Description: "API Gateway endpoint URL for proxy function"
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/api"
+    Export:
+      Name: !Sub "${AWS::StackName}-ApiGatewayUrl"
   ProxyFunctionArn:
     Description: Proxy Function Arn
     Value: !GetAtt ProxyFunction.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-ProxyFunctionArn"
